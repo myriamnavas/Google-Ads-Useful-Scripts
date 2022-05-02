@@ -1,0 +1,56 @@
+function main() {
+  var emailContent = "";
+  var total = 0;
+  var disponible = 1800;
+  var estimado = 0;
+  const fecha = new Date();
+  const hoy = fecha.getDate();
+  
+      var campaignSelector = AdsApp.campaigns()
+          .withCondition("Impressions > 0")
+          .forDateRange("THIS_MONTH");
+  
+      var campaignIterator = campaignSelector.get();
+     while (campaignIterator.hasNext()) {
+         var campaign = campaignIterator.next();
+         var campaignName = campaign.getName();
+         var stats = campaign.getStatsFor("THIS_MONTH");
+         var cost = stats.getCost();
+         emailContent = emailContent + "The campaign " + campaignName + 
+             " spend € " + cost + "\n";
+         total = total + cost;
+     }
+  
+     console.log(hoy);
+     
+     estimado = total * 30 / hoy;
+     console.log(estimado);
+  
+    if (estimado < 0.85*disponible) {
+        
+     var recipient = "mnavas@myriamnavas.com";
+     var subject = "Coste de campañas Google Ads // Este mes";
+     var body = "El coste a lo largo del mes: \n\n" + emailContent + 
+         ".\n\n" + "Coste total: €"  + total + ".\n\n" + "ALERTA! Previsión de gasto por DEBAJO del 15% del disponible";
+       
+     MailApp.sendEmail(recipient, subject, body);
+    }
+  
+    if (estimado > 1.15*disponible) {
+        
+     var recipient = "mnavas@myriamnavas.com";
+     var subject = "Coste de campañas Google Ads // Este mes";
+     var body = "El coste a lo largo del mes: \n\n" + emailContent + 
+         ".\n\n" + "Coste total: €"  + total + ".\n\n" + "ALERTA! Previsión de gasto por ENCIMA del 15% del disponible";
+       
+     MailApp.sendEmail(recipient, subject, body);
+    }
+   
+    else {
+     var recipient = "mnavas@myriamnavas.com";
+     var subject = "Coste de campañas Google Ads // Este mes";
+     var body = "El coste a lo largo del mes: \n\n" + emailContent + 
+         ".\n\n" + "Coste total: €"  + total ;
+       
+     MailApp.sendEmail(recipient, subject, body);
+ }}
