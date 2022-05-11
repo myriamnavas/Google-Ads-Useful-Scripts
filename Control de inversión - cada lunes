@@ -1,7 +1,7 @@
 function main() {
   var emailContent = "";
   var total = 0;
-  var disponible = 1800;
+  var disponible = 1000;
   var estimado = 0;
   const fecha = new Date();
   const hoy = fecha.getDate();
@@ -20,37 +20,32 @@ function main() {
              " spend € " + cost + "\n";
          total = total + cost;
      }
-  
-     console.log(hoy);
      
-     estimado = total * 30 / hoy;
-     console.log(estimado);
+     estimado = total * 30.4 / hoy;
   
-    if (estimado < 0.85*disponible) {
+    if (estimado < 0.80*disponible) {
         
      var recipient = "mnavas@myriamnavas.com";
-     var subject = "Coste de campañas Google Ads // Este mes";
+     var subject = "[Ole Agency - Bajo] Alerta diaria! Coste de campañas Google Ads // Este mes";
      var body = "El coste a lo largo del mes: \n\n" + emailContent + 
-         ".\n\n" + "Coste total: €"  + total + ".\n\n" + "ALERTA! Previsión de gasto por DEBAJO del 15% del disponible";
+         ".\n\n" + "Coste total: €"  + total + ".\n\n" + "ALERTA! Previsión de gasto por DEBAJO del 20% del disponible" + 
+         "\n\n" + "Coste estimado a fin de mes de " + estimado + "€." +
+         "\n\n" + "Inversión disponible: " + disponible + "€.";
        
      MailApp.sendEmail(recipient, subject, body);
     }
   
-    if (estimado > 1.15*disponible) {
+    if (estimado > 1.20*disponible) {
         
      var recipient = "mnavas@myriamnavas.com";
-     var subject = "Coste de campañas Google Ads // Este mes";
+     var subject = "[Ole Agency - Alto] Alerta diaria! Coste de campañas Google Ads // Este mes";
      var body = "El coste a lo largo del mes: \n\n" + emailContent + 
-         ".\n\n" + "Coste total: €"  + total + ".\n\n" + "ALERTA! Previsión de gasto por ENCIMA del 15% del disponible";
+         ".\n\n" + "Coste total: €"  + total + ".\n\n" + "ALERTA! Previsión de gasto por ENCIMA del 20% del disponible" + 
+         "\n\n" + "Coste estimado a fin de mes de " + estimado + "€." +
+         "\n\n" + "Inversión disponible: " + disponible + "€.";
        
      MailApp.sendEmail(recipient, subject, body);
     }
-   
-    else {
-     var recipient = "mnavas@myriamnavas.com";
-     var subject = "Coste de campañas Google Ads // Este mes";
-     var body = "El coste a lo largo del mes: \n\n" + emailContent + 
-         ".\n\n" + "Coste total: €"  + total ;
-       
-     MailApp.sendEmail(recipient, subject, body);
- }}
+  else {
+  }
+   }
